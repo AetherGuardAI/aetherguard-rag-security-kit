@@ -49,7 +49,7 @@ async def ingest_document(text: str) -> None:
 
     # 2. Send to AetherGuard for security processing
     async with AetherGuardRAG(
-        api_url="https://api.aetherguard.ai",
+        api_url="https://rag-secure.aetherguard.ai",
         api_key="YOUR_API_KEY",
     ) as ag:
         result = await ag.secure_ingest(
