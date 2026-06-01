@@ -3,10 +3,19 @@
 Zero-trust retrieval governance for Retrieval-Augmented Generation (RAG) pipelines.
 
 The SDK is a **thin async REST client** — it does no hashing, signing, scanning, or
-database work itself.  All security operations are performed server-side by the
-AetherGuard backend-api.  The SDK works with **any vector database** (Pinecone,
+database work itself. All security operations are performed server-side by the
+AetherGuard backend-api. The SDK works with **any vector database** (Pinecone,
 Chroma, pgvector, Weaviate, Qdrant, OpenSearch, …) and **any embedding model**
 (OpenAI, Cohere, local models, …).
+
+---
+
+## Getting Started
+
+1. Go to [https://portal.aetherguard.ai](https://portal.aetherguard.ai)
+2. Sign up for a free account
+3. Generate an API key from the portal dashboard
+4. Use the API key in the SDK as shown below
 
 ---
 
@@ -25,7 +34,7 @@ Python 3.10 or later is required.
 ### 1. Ingestion Flow
 
 Split your document, generate embeddings with your preferred model, then hand
-the chunks and embeddings to the SDK.  Store the returned metadata alongside
+the chunks and embeddings to the SDK. Store the returned metadata alongside
 your vectors in your vector database.
 
 ```python
@@ -75,7 +84,8 @@ returns safe context ready for your LLM.
 import asyncio
 from aetherguard_rag_security import AetherGuardRAG, RetrievalDeniedError
 
-async def retrieve_context(query: str, email: str) -> str:    # 1. Query your vector DB as normal
+async def retrieve_context(query: str, email: str) -> str:
+    # 1. Query your vector DB as normal
     query_embedding = my_embedding_model.embed([query])[0]
     raw_results = vector_db.query(
         vector=query_embedding,
@@ -92,7 +102,7 @@ async def retrieve_context(query: str, email: str) -> str:    # 1. Query your ve
             result = await ag.secure_retrieve(
                 raw_results=raw_results,   # list of dicts from your vector DB
                 tenant_id="acme-corp",
-                email=user_id,
+                email=email,
                 region="us-east-1",
                 max_tokens=4096,
                 trust_threshold="trusted",
@@ -142,26 +152,26 @@ vector database.
 
 ```python
 import asyncio
-from aetherguard_rag_security import AetherGuardRAG
+from aetherguard_rag_security import AetherGuardRAG, AuthorizationError
 
 async def check_access(user_id: str, role: str) -> bool:
     async with AetherGuardRAG(
         api_url="https://api.aetherguard.ai",
         api_key="YOUR_API_KEY",
     ) as ag:
-        result = await ag.authorize(
-            tenant_id="acme-corp",
-            user_id=user_id,
-            role=role,
-            region="us-east-1",
-        )
+        try:
+            result = await ag.authorize(
+                tenant_id="acme-corp",
+                user_id=user_id,
+                role=role,
+                region="us-east-1",
+            )
+        except AuthorizationError as exc:
+            print(f"Denied: {exc.denial_reason}")
+            return False
 
-    if result.authorized:
-        print(f"Authorised — namespace={result.namespace}, "
-              f"classifications={result.allowed_classifications}")
-    else:
-        print(f"Denied: {result.denial_reason}")
-
+    print(f"Authorised — namespace={result.namespace}, "
+          f"classifications={result.allowed_classifications}")
     return result.authorized
 
 asyncio.run(check_access("user-42", "support"))
@@ -237,10 +247,9 @@ Retries use exponential backoff: 1 s → 2 s → 4 s → …
 
 - Python >= 3.10
 - `httpx >= 0.25.0`
-- `pydantic >= 2.0.0`
 
 ---
 
 ## License
 
-Proprietary — AetherGuard AI.  All rights reserved.
+Proprietary — AetherGuard AI. All rights reserved.
