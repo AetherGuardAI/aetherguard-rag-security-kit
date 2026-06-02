@@ -188,7 +188,6 @@ class AetherGuardRAG:
     async def secure_retrieve(
         self,
         raw_results: list[dict[str, Any]],
-        tenant_id: str,
         email: str,
         region: str,
         max_tokens: int = 4096,
@@ -207,8 +206,6 @@ class AetherGuardRAG:
         raw_results:
             Raw results from the customer's vector DB query.  Each dict must
             contain at minimum: ``chunk_id``, ``content``, ``metadata``.
-        tenant_id:
-            Tenant identifier.
         email:
             Requesting user's email address used for authorisation.
         region:
@@ -235,7 +232,6 @@ class AetherGuardRAG:
         """
         payload: dict[str, Any] = {
             "raw_results": raw_results,
-            "tenant_id": tenant_id,
             "email": email,
             "region": region,
             "max_tokens": max_tokens,

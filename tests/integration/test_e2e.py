@@ -239,7 +239,6 @@ async def test_secure_retrieve_happy_path() -> None:
                     {"chunk_id": "chunk-001", "content": "Safe chunk 1", "metadata": {}},
                     {"chunk_id": "chunk-002", "content": "Safe chunk 2", "metadata": {}},
                 ],
-                tenant_id="acme",
                 email="user@acme.com",
                 region="us-east-1",
             )
@@ -272,7 +271,6 @@ async def test_secure_retrieve_403_raises_retrieval_denied() -> None:
             with pytest.raises(RetrievalDeniedError) as exc_info:
                 await ag.secure_retrieve(
                     raw_results=[{"chunk_id": "c1", "content": "x", "metadata": {}}],
-                    tenant_id="acme",
                     email="guest@acme.com",
                     region="us-east-1",
                 )
@@ -301,7 +299,6 @@ async def test_secure_retrieve_timeout_raises_connection_error() -> None:
                 with pytest.raises(AetherConnectionError):
                     await ag.secure_retrieve(
                         raw_results=[{"chunk_id": "c1", "content": "x", "metadata": {}}],
-                        tenant_id="acme",
                         email="user@acme.com",
                         region="us-east-1",
                     )
