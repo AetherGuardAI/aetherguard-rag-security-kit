@@ -35,7 +35,7 @@ class HTTPTransport:
     Parameters
     ----------
     base_url:
-        Base URL of backend-api (e.g. ``"https://api.aetherguard.ai"``).
+        Base URL of backend-api (e.g. ``"https://rag-secure.aetherguard.ai"``).
     api_key:
         API key used in the ``Authorization: Bearer`` header.
     timeout:

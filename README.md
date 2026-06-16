@@ -96,7 +96,7 @@ async def retrieve_context(query: str, email: str) -> str:
 
     # 2. Send raw results to AetherGuard for verification + sanitisation
     async with AetherGuardRAG(
-        api_url="https://api.aetherguard.ai",
+        api_url="https://rag-secure.aetherguard.ai",
         api_key="YOUR_API_KEY",
     ) as ag:
         try:
@@ -131,7 +131,7 @@ from aetherguard_rag_security import AetherGuardRAG
 
 async def check_chunk(chunk_id: str) -> None:
     async with AetherGuardRAG(
-        api_url="https://api.aetherguard.ai",
+        api_url="https://rag-secure.aetherguard.ai",
         api_key="YOUR_API_KEY",
     ) as ag:
         result = await ag.verify_chunk(chunk_id)
@@ -157,7 +157,7 @@ from aetherguard_rag_security import AetherGuardRAG, AuthorizationError
 
 async def check_access(user_id: str, role: str) -> bool:
     async with AetherGuardRAG(
-        api_url="https://api.aetherguard.ai",
+        api_url="https://rag-secure.aetherguard.ai",
         api_key="YOUR_API_KEY",
     ) as ag:
         try:
@@ -189,7 +189,7 @@ from aetherguard_rag_security import AetherGuardRAG
 
 async def main() -> None:
     async with AetherGuardRAG(
-        api_url="https://api.aetherguard.ai",
+        api_url="https://rag-secure.aetherguard.ai",
         api_key="YOUR_API_KEY",
         timeout=30.0,      # seconds per request
         max_retries=3,     # retries on 502/503/504 with exponential backoff

@@ -125,7 +125,6 @@ async def test_secure_ingest_happy_path() -> None:
             result = await ag.secure_ingest(
                 chunks=["chunk text one", "chunk text two"],
                 embeddings=[[0.1, 0.2], [0.3, 0.4]],
-                tenant_id="acme",
                 region="us-east-1",
                 document_id="doc-001",
             )
@@ -157,7 +156,6 @@ async def test_secure_ingest_400_raises_ingest_error() -> None:
                 await ag.secure_ingest(
                     chunks=["text"],
                     embeddings=[[0.1]],
-                    tenant_id="bad tenant!",
                     region="us-east-1",
                 )
 
@@ -182,7 +180,6 @@ async def test_secure_ingest_length_mismatch_no_http() -> None:
                 await ag.secure_ingest(
                     chunks=["a", "b", "c"],
                     embeddings=[[0.1], [0.2]],
-                    tenant_id="acme",
                     region="us-east-1",
                 )
 
@@ -211,7 +208,6 @@ async def test_secure_ingest_timeout_raises_connection_error() -> None:
                     await ag.secure_ingest(
                         chunks=["text"],
                         embeddings=[[0.1]],
-                        tenant_id="acme",
                         region="us-east-1",
                     )
 
@@ -239,7 +235,6 @@ async def test_secure_retrieve_happy_path() -> None:
                     {"chunk_id": "chunk-001", "content": "Safe chunk 1", "metadata": {}},
                     {"chunk_id": "chunk-002", "content": "Safe chunk 2", "metadata": {}},
                 ],
-                tenant_id="acme",
                 email="user@acme.com",
                 region="us-east-1",
             )
@@ -272,7 +267,6 @@ async def test_secure_retrieve_403_raises_retrieval_denied() -> None:
             with pytest.raises(RetrievalDeniedError) as exc_info:
                 await ag.secure_retrieve(
                     raw_results=[{"chunk_id": "c1", "content": "x", "metadata": {}}],
-                    tenant_id="acme",
                     email="guest@acme.com",
                     region="us-east-1",
                 )
@@ -301,7 +295,6 @@ async def test_secure_retrieve_timeout_raises_connection_error() -> None:
                 with pytest.raises(AetherConnectionError):
                     await ag.secure_retrieve(
                         raw_results=[{"chunk_id": "c1", "content": "x", "metadata": {}}],
-                        tenant_id="acme",
                         email="user@acme.com",
                         region="us-east-1",
                     )
@@ -333,9 +326,7 @@ async def test_authorize_happy_path() -> None:
 
         async with _make_client() as ag:
             result = await ag.authorize(
-                tenant_id="acme",
-                user_id="user-1",
-                role="reader",
+                email="user-1@acme.com",
                 region="us-east-1",
             )
 
@@ -366,9 +357,7 @@ async def test_authorize_denied() -> None:
             from aetherguard_rag_security.exceptions import AuthorizationError
             with pytest.raises(AuthorizationError) as exc_info:
                 await ag.authorize(
-                    tenant_id="acme",
-                    user_id="user-1",
-                    role="unknown-role",
+                    email="user-1@acme.com",
                     region="us-east-1",
                 )
 

@@ -62,7 +62,6 @@ async def test_secure_ingest_length_mismatch_raises_value_error_no_http(
             await client.secure_ingest(
                 chunks=chunks,
                 embeddings=embeddings,
-                tenant_id="test-tenant",
                 region="us-east-1",
             )
 
