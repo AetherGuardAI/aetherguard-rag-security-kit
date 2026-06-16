@@ -44,12 +44,12 @@ class AetherGuardRAG:
 
     Usage — async context manager (recommended)::
 
-        async with AetherGuardRAG(api_url="https://rag-secure.aetherguard.ai", api_key="...") as ag:
+        async with AetherGuardRAG(api_url="https://example.com", api_key="...") as ag:
             result = await ag.secure_ingest(chunks, embeddings,region="us-east-1")
 
     Usage — explicit lifecycle::
 
-        ag = AetherGuardRAG(api_url="https://rag-secure.aetherguard.ai", api_key="...")
+        ag = AetherGuardRAG(api_url="https://example.com", api_key="...")
         try:
             result = await ag.secure_ingest(...)
         finally:
@@ -58,7 +58,7 @@ class AetherGuardRAG:
     Parameters
     ----------
     api_url:
-        Base URL of backend-api (e.g. ``"https://rag-secure.aetherguard.ai"``).
+        Base URL of backend-api (e.g. ``"https://example.com"``).
     api_key:
         API key used for Bearer-token authentication on every request.
     timeout:

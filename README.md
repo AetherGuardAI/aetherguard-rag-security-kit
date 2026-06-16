@@ -32,6 +32,8 @@ Python 3.10 or later is required.
 
 ## Quick Start
 
+> **Note:** Replace `https://example.com` with the actual API URL provided in the **Settings** section of the [AetherGuard AI Control Portal](https://portal.aetherguard.ai).
+
 ### 1. Ingestion Flow
 
 Split your document, generate embeddings with your preferred model, then hand
@@ -49,7 +51,7 @@ async def ingest_document(text: str) -> None:
 
     # 2. Send to AetherGuard for security processing
     async with AetherGuardRAG(
-        api_url="https://rag-secure.aetherguard.ai",
+        api_url="https://example.com",
         api_key="YOUR_API_KEY",
     ) as ag:
         result = await ag.secure_ingest(
@@ -96,7 +98,7 @@ async def retrieve_context(query: str, email: str) -> str:
 
     # 2. Send raw results to AetherGuard for verification + sanitisation
     async with AetherGuardRAG(
-        api_url="https://rag-secure.aetherguard.ai",
+        api_url="https://example.com",
         api_key="YOUR_API_KEY",
     ) as ag:
         try:
@@ -131,7 +133,7 @@ from aetherguard_rag_security import AetherGuardRAG
 
 async def check_chunk(chunk_id: str) -> None:
     async with AetherGuardRAG(
-        api_url="https://rag-secure.aetherguard.ai",
+        api_url="https://example.com",
         api_key="YOUR_API_KEY",
     ) as ag:
         result = await ag.verify_chunk(chunk_id)
@@ -157,7 +159,7 @@ from aetherguard_rag_security import AetherGuardRAG, AuthorizationError
 
 async def check_access(user_id: str, role: str) -> bool:
     async with AetherGuardRAG(
-        api_url="https://rag-secure.aetherguard.ai",
+        api_url="https://example.com",
         api_key="YOUR_API_KEY",
     ) as ag:
         try:
@@ -189,7 +191,7 @@ from aetherguard_rag_security import AetherGuardRAG
 
 async def main() -> None:
     async with AetherGuardRAG(
-        api_url="https://rag-secure.aetherguard.ai",
+        api_url="https://example.com",
         api_key="YOUR_API_KEY",
         timeout=30.0,      # seconds per request
         max_retries=3,     # retries on 502/503/504 with exponential backoff
