@@ -13,7 +13,7 @@ Chroma, pgvector, Weaviate, Qdrant, OpenSearch, …) and **any embedding model**
 
 ## Getting Started
 
-1. Go to [https://portal.aetherguard.ai](https://portal.aetherguard.ai)
+1. Go to [https://aetherguard.ai](https://aetherguard.ai)
 2. Sign up for a free account
 3. Generate an API key from the portal dashboard
 4. Use the API key in the SDK as shown below
