@@ -13,7 +13,7 @@ Chroma, pgvector, Weaviate, Qdrant, OpenSearch, …) and **any embedding model**
 
 ## Getting Started
 
-1. Go to [https://genesis.aetherguard.ai/singup](https://genesis.aetherguard.ai/signup)
+1. Go to [https://genesis.aetherguard.ai/signup](https://genesis.aetherguard.ai/signup)
 2. Sign up for a free account
 3. Generate an API key from the control portal dashboard
 4. Go to settings > deployment info and copy Rag service url
