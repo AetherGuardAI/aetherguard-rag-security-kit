@@ -32,7 +32,7 @@ Python 3.10 or later is required.
 
 ## Quick Start
 
-> **Note:** Replace `https://example.com` with the actual API URL provided in the **Settings** section of the [AetherGuard AI Control Portal](https://portal.aetherguard.ai).
+> **Note:** Replace `https://example.com` with the actual API URL provided in the **Settings** section of the [AetherGuard AI Control Portal](https://genesis.aetherguard.ai).
 
 ### 1. Ingestion Flow
 
